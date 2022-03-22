@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="robots" content="noindex"><meta><title>태그: Reinforcement Learning - Jar.Empty()</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Jar.Empty()"><meta name="msapplication-TileImage" content="/img/logo.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Jar.Empty()"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta property="og:type" content="blog"><meta property="og:title" content="Jar.Empty()"><meta property="og:url" content="http://sonhs99.github.io/"><meta property="og:site_name" content="Jar.Empty()"><meta property="og:locale" content="ko_KR"><meta property="og:image" content="http://sonhs99.github.io/img/og_image.png"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://sonhs99.github.io"},"headline":"Jar.Empty()","image":["http://sonhs99.github.io/img/og_image.png"],"author":{"@type":"Person","name":""},"publisher":{"@type":"Organization","name":"Jar.Empty()","logo":{"@type":"ImageObject","url":"http://sonhs99.github.io/img/logo.png"}},"description":""}</script><link rel="icon" href="/img/logo.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><meta name="generator" content="Hexo 6.1.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="Jar.Empty()" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a></div><div class="navbar-end"><a class="navbar-item search" title="검색" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/tags">태그</a></li><li class="is-active"><a href="#" aria-current="page">Reinforcement Learning</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-03-22T02:18:11.000Z" title="2022. 3. 22. 오전 11:18:11">2022-03-22</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2022-03-22T06:37:15.388Z" title="2022. 3. 22. 오후 3:37:15">2022-03-22</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/AI/">AI</a><span> / </span><a class="link-muted" href="/categories/AI/Reinforcement-Learning/">Reinforcement Learning</a></span><span class="level-item">5분안에 읽기 (약 761 단어)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/03/22/%EC%B0%B8%EC%83%88%EC%9E%91-AI-%EB%A7%8C%EB%93%A4%EA%B8%B0-2-%EC%97%AD/">참새작 AI 만들기 2 - 역</a></h1><div class="content"><h2 id="몸통"><a href="#몸통" class="headerlink" title="몸통"></a>몸통</h2><p>참새작에서 화료를 하려면 먼저 몸통 2세트를 만들어야 한다. 몸통의 종류는 다음과 같다.</p>
+<ul>
+<li>슌쯔: 연속된 수패 3장</li>
+<li>커쯔: 같은 패 3장</li>
+</ul>
+<p>가장 이상적인 손패는 몸통이 앞 3개&#x2F;뒷 3개로 나뉘는 경우이다. 그렇지 않는 경우가 있다.</p>
+<blockquote>
+<p>[1, 2, 3, 6, 6, 6] &#x3D;&gt; [1, 2, 3], [6, 6, 6] : 이상적인 경우<br>[1, 1, 2, 2, 3, 3] &#x3D;&gt; [1, 2, 3], [1, 2, 3] : 형태 O, 그러나 이상적이지 않다.</p>
+</blockquote>
+<p>주로 이러한 ‘예외’는 커쯔에서 발생한다. 그러므로 커쯔를 잘 인식하도록 알고리즘을 잘 설계할 필요가 있다.</p>
+<h3 id="커쯔-인식"><a href="#커쯔-인식" class="headerlink" title="커쯔 인식"></a>커쯔 인식</h3><p>커쯔가 있는 경우와 그 커쯔의 index를 보면 다음과 같다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, 3, X, X, X] =&gt; index [0, 1, 2]</span><br><span class="line">[1, 2, 2, 3, X, X] =&gt; index [0, 1, 3] (X)</span><br><span class="line">[1, 2, 2, 2, 3, X] =&gt; index [0, 1, 4] (X)</span><br><span class="line">[1, 2, 2, 2, 2, 3] =&gt; index [0, 1, 5]</span><br><span class="line">[1, 1, 2, 3, X, X] =&gt; index [0, 2, 3] (X)</span><br><span class="line">[1, 1, 2, 2, 3, X] =&gt; index [0, 2, 4]</span><br><span class="line">[1, 1, 2, 2, 2, 3] =&gt; index [0, 2, 5] (X)</span><br><span class="line">[1, 1, 1, 2, 3, X] =&gt; index [0, 3, 4] (X)</span><br><span class="line">[1, 1, 1, 2, 2, 3] =&gt; index [0, 3, 5] (X)</span><br><span class="line">[1, 1, 1, 1, 2, 3] =&gt; index [0, 4, 5]</span><br></pre></td></tr></table></figure>
+
+<p>어떠한 경우에도 화료 가능한 형태가 많들어지지 않은 경우에는 X로 표시하였다. 이를 통해 슌쯔를 검사하는 경우의 수를 줄이자면,</p>
+<ol>
+<li>[0, 1, 2]</li>
+<li>[0, 1, 5]</li>
+<li>[0, 2, 4]</li>
+<li>[0, 4, 5] : 커쯔-슌쯔 순으로 구성된 경우이므로, 실질적으로 1번과 같다.</li>
+</ol>
+<p>이 세 경우만 살피면 된다. Score.split 함수는 위의 과정을 거쳐 몸통 2개를 분리한다. 다만, 이 함수에서는 패의 형태가 올바른지 확인하지는 않는다.</p>
+<h3 id="몸통의-정보"><a href="#몸통의-정보" class="headerlink" title="몸통의 정보"></a>몸통의 정보</h3><p>몸통도 역을 구하기 쉽도록 정보를 미리 처리할 수 있다. 역과 그에 해당하는 정보를 보자면,</p>
+<ul>
+<li>슌쯔&#x2F;커쯔</li>
+<li>1&#x2F;9&#x2F;발&#x2F;중의 포함여부 - 단요구, 찬타, 혼요구</li>
+<li>적색, 녹색 패의 개수 - 적색 패, 녹일색, 적일색</li>
+<li>도라의 개수</li>
+</ul>
+<p>Score.count_triple 함수는 몸통을 인자로 받아 그 몸통의 정보를 반환하는 함수이다. 만약 몸통이 아니라면, Null에 해당하는 값을 반환한다. 이를 통해 손패가 형태를 갖추고 있는지 알 수 있다.</p>
+<h2 id="역"><a href="#역" class="headerlink" title="역"></a>역</h2><p>몸통의 정보를 얻었다면 이제 역을 구할 수 있다. 모든 역이 중첩이 되는 것은 아니다. 역의 중첩 규칙은 다음과 같다.</p>
+<ul>
+<li>기본 역(슌쯔, 커쯔)는 반드시 중첩된다.</li>
+<li>일반 역과 역만 역은 중첩되지 않으며, 역만 역을 선택한다.</li>
+</ul>
+<p>그러므로 반드시 중첩되는 역부터 검사하는 것이 좋다. Hand의 point 함수는 위의 함수를 사용해서 몸통의 정보를 얻고, 그 정보를 활용해서 손패의 점수를 계산한다. 손패의 점수가 5점 이상이야 화료할 수 있기 때문에, 형태를 갖추지 않을 경우에는 0점으로 처리하여 점수만으로도 화료조건을 확인할 수 있도록 하였다.</p>
+<h2 id="결론"><a href="#결론" class="headerlink" title="결론"></a>결론</h2><ul>
+<li>커쯔의 존재로 다양한 형태의 손패가 나올 수 있기 때문에, 커쯔를 중심으로 몸통을 인식하는 것이 좋다.</li>
+<li>역을 인식하기 쉽게 하기 위해서, 몸통의 정보를 미리 계산하는 것이 좋다.</li>
+</ul>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-03-22T01:11:10.000Z" title="2022. 3. 22. 오전 10:11:10">2022-03-22</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2022-03-22T02:12:10.814Z" title="2022. 3. 22. 오전 11:12:10">2022-03-22</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/AI/">AI</a><span> / </span><a class="link-muted" href="/categories/AI/Reinforcement-Learning/">Reinforcement Learning</a></span><span class="level-item">4분안에 읽기 (약 566 단어)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/03/22/%EC%B0%B8%EC%83%88%EC%9E%91-AI-%EB%A7%8C%EB%93%A4%EA%B8%B0-2-%ED%8C%A8-%EC%86%90%ED%8C%A8-%EB%B2%84%EB%A6%BC%ED%8C%A8/">참새작 AI 만들기 2 - 패, 손패, 버림패</a></h1><div class="content"><h2 id="패"><a href="#패" class="headerlink" title="패"></a>패</h2><p>참새작에서 사용되는 패는 총 44장이다. 이 패를 역을 계산하기 쉬운 형태로 변형해야 한다.<br>역에 영향을 미치는 속성은 다음과 같다.</p>
+<ul>
+<li>패의 종류(1~9, 녹, 발)</li>
+<li>패의 색(적색, 녹색, 검정-나머지)</li>
+<li>귀족패(1, 9, 녹, 발)</li>
+</ul>
+<p>시뮬레이션을 더 빠르게 하기 위해서, 패의 속성을 미리 계산해 둔 테이블을 사용한다. 패의 개수와 패의 속성은 게임을 하는 동안 변하지 않기 때문에, 작은 크기의 테이블로도 충분히 속성을 관리할 수 있다. Card.CardTable은 그 테이블을 생성하고 관리하는 클래스이다.</p>
+<h2 id="손패와-버림패"><a href="#손패와-버림패" class="headerlink" title="손패와 버림패"></a>손패와 버림패</h2><p>참새작을 이루는 요소 중 가장 중요한 요소이다. 패는 패산 -&gt; 손패 -&gt; 버림패 순으로 이동하기 때문에 손패에서 버림패를 관리하는 것이 좋다. 현재 상태를 하나의 배열(Table)로 표현 가능하듯이, 손패와 버림패 역시 Table로 표현이 가능하다. 예를 들어, 손패에 있는 패를 1, 버렸을 경우는 2, 그 외의 경우를 0으로 표현할 수 있다. Numpy의 boolean indexing을 사용하여 손패와 버림패 목록을 간단하게 얻을 수 있다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 손패 목록</span><br><span class="line">np.arange(44)[hand == 1]</span><br><span class="line"># 버림패 목록</span><br><span class="line">np.arange(44)[hand == 2]</span><br></pre></td></tr></table></figure>
+
+<p>또한 버림패같은 경우, 론을 할 수 있는지도 확인해야 하기 때문에 패를 찾아야 하는 list나 set보다 패의 위치가 어디인지 바로 확인할 수 있는 Table로 관리하는 것이 좋다. </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># list 기반</span><br><span class="line">is_discarded = card in discard_zone # iteration 필요</span><br><span class="line"># table 기반</span><br><span class="line">is_discarded = hand[card] == 2 # 직접 접근</span><br></pre></td></tr></table></figure>
+
+<h2 id="순서"><a href="#순서" class="headerlink" title="순서"></a>순서</h2><p>상태를 하나의 배열로 관리하면 상태의 공간을 줄일 수 있지만, <strong>순서</strong>는 알 수 없다. 그러므로 만약 순서가 중요하다면(버린 순서), 순서를 저장할 공간을 따로 만들어야 한다.<br>Hand.DiscardZone은 버린 순서를 저장하는 클래스로 버린 순서를 list로 저장한다. 이 클래스는 게임에 직접적인 영향을 끼치지 않으며, 오직 상태를 출력할 때에만 사용된다.</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-03-20T01:32:53.000Z" title="2022. 3. 20. 오전 10:32:53">2022-03-20</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2022-03-21T04:36:05.452Z" title="2022. 3. 21. 오후 1:36:05">2022-03-21</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/AI/">AI</a><span> / </span><a class="link-muted" href="/categories/AI/Reinforcement-Learning/">Reinforcement Learning</a></span><span class="level-item">7분안에 읽기 (약 1120 단어)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/03/20/%EC%B0%B8%EC%83%88%EC%9E%91-AI-%EB%A7%8C%EB%93%A4%EA%B8%B0-1-%EC%97%90%EC%9D%B4%EC%A0%84%ED%8A%B8/">참새작 AI 만들기 1 - 에이전트</a></h1><div class="content"><p>참새작에서 구현할 에이전트(Agent)는 다음과 같다.</p>
+<ul>
+<li>RandomAgent : 현재 가능한 행동(Action)을 무작위로 선택하는 에이전트. 비교군</li>
+<li>OpenAgent : 모든 플레이어의 패와 버린 패를 확인하여 행동(Action)을 선택하는 에이전트.</li>
+<li>ClosedAgent : 자기 패와 모든 플레이어의 버린 패만을 확인하여 행동(Action)을 선택하는 에이전트.</li>
+</ul>
+<h2 id="Monte-Carlo"><a href="#Monte-Carlo" class="headerlink" title="Monte Carlo?"></a>Monte Carlo?</h2><p>몬테 카를로 방법은 꽤 좋은 방법이다. 많은 사람들에게 충격을 준 AlphaGo와 AlphaGo Zero는 더 좋은 수를 얻기 위해 몬테 카를로 트리 탐색을 사용하였다. 그러나 바둑과 마작은 다르다.</p>
+<p>바둑은 상태가 모든 플레이어에게 <strong>공개</strong>되어있다. 바둑판의 일부를 못본다거나, 상대방의 돌의 일부를 보지 못하는 경우는 없다. 그러나 마작은 자신의 패와 모든 플레이어의 버린 패만을 확인할 수 있다. 그러므로 상대방이 어떤 행동을 할지 모른다. 상대방이 5를 버릴 것이라고 확신할 수 있는가? 설령 자신이 치트를 써서 상대방의 패를 모두 확인할 수 있다고 해도, 다음 ‘쯔모’하는 패는 확인할 수 없다. (쯔모 순서를 Agent에 알려줘 다음 상태를 ‘완벽히’ 예측할 수 있도록 설계할 수 있으나, 너무 많은 정보를 준다고 생각하여 기각하였다.) 그러므로 몬테 카를로 방법을 마작에 적용하기 어렵다.</p>
+<h2 id="Open-그-다음-Closed"><a href="#Open-그-다음-Closed" class="headerlink" title="Open, 그 다음 Closed"></a>Open, 그 다음 Closed</h2><p>인터넷을 탐색하던 중 MS의 Suphx에 대하여 알게 되었다. Suphx는 일본&#x2F;중국 마작을 할 수 있는 Agent로 현재 최고의 마작 AI로 알려져 있다. 이 Agent의 특징으로는</p>
+<ul>
+<li>패 버림&#x2F;쯔모&#x2F;치&#x2F;펑&#x2F;깡&#x2F;론 각각에 해당하는 신경망을 갖고 있다.</li>
+<li>처음 학습할 때에는 모든 패를 공개한 상태에서 학습한다. Agent가 충분히 강해졌다고 생각했을 때, 패를 하나씩 비공개한다.</li>
+</ul>
+<p>‘처음에는 공개, 충분히 강해졌으면 비공개’에서 영감을 받았다. OpenAgent와 ClosedAgent는 각각 공개&#x2F;비공개에 해당된다. 그러나 비공개 했을 경우, 입력을 그에 맞춰서 수정해야하는 문제가 발생한다.</p>
+<h2 id="손패-예측"><a href="#손패-예측" class="headerlink" title="손패 예측"></a>손패 예측</h2><p>상대방의 패를 예측하는 것은 비공개 게임에서 아주 기본적인 전술이다. 마작에서도 마찬가지인데, 상대방의 공개된 정보(버린 패, 치&#x2F;펑&#x2F;깡)를 보고 상대방의 손패를 어느정도 예측할 수 있기 때문이다. 게다가 ‘후리텐’이 있는 일본마작인 경우, 상대방의 오름패를 견제할 수도 있기 때문에 패를 버리는 행위가 많은 정보를 포함한다. 이를 토대로 일부만 공개된 상태를 <strong>복원</strong>하는 <strong>손패 예측기</strong>를 고안하였다.</p>
+<p>우선, OpenAgent의 알고리즘은 다음과 같다.</p>
+<blockquote>
+<p>(턴 시작)–&gt; 상태 변환 –(완전히 공개된 상태)–&gt; [행동 선택기] –&gt; (행동) </p>
+</blockquote>
+<p> 다음으로 ClosedAgent의 알고리즘은 다음과 같다.</p>
+<blockquote>
+<p>(턴 시작)–&gt; 상태 변환(불완전) –(일부만 공개된 상태)–&gt; [손패 예측기] –(정제되지 않은 상태)–&gt; 정제 –(복원된 상태)–&gt; [행동 선택기] –&gt; (행동)</p>
+</blockquote>
+<p> ‘정제’과정은 손패 예측기를 보조하는 역할을 한다. 이미 공개된 정보를 활용하여 손패 예측의 정확도를 올리고, OpenAgent와 공유하는 행동 선택기에 알맞은 형식으로 변환한다. 그러므로 손패 예측기는 행동 선택기와 독립적으로 존재하며, 다른 방식으로 학습한다. ‘정제’과정이 있기 때문에 손패 예측기의 출력은 ‘예측된 손패’를 확인할 수 있기만 한다면 어떠한 형태든 허용된다.</p>
+<h2 id="결론"><a href="#결론" class="headerlink" title="결론"></a>결론</h2><ul>
+<li>마작은 비공개 정보 때문에 Monte Carlo 방식을 적용하기 어렵다.</li>
+<li>MS의 Suphx는 <strong>Open, 그 다음 Closed</strong> 전략을 사용하여 Agent를 강하게 만들었다.</li>
+<li>OpenAgent와 ClosedAgent의 간극을 메꾸기 위해 손패를 예측하는 부분을 추가하였다.</li>
+<li>‘정제’과정을 통하여 상대방 손패 예측의 정확도를 올린다.</li>
+</ul>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-03-19T08:05:52.000Z" title="2022. 3. 19. 오후 5:05:52">2022-03-19</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2022-03-22T01:44:06.793Z" title="2022. 3. 22. 오전 10:44:06">2022-03-22</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/AI/">AI</a><span> / </span><a class="link-muted" href="/categories/AI/Reinforcement-Learning/">Reinforcement Learning</a></span><span class="level-item">11분안에 읽기 (약 1603 단어)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/03/19/%EC%B0%B8%EC%83%88%EC%9E%91-AI-%EB%A7%8C%EB%93%A4%EA%B8%B0-1-%ED%99%98%EA%B2%BD/">참새작 AI 만들기 1 - 환경</a></h1><div class="content"><p>참새작의 환경은 다음과 같이 구성된다.</p>
+<h2 id="패"><a href="#패" class="headerlink" title="패"></a>패</h2><p>참새작의 패는 11종류, 4세트인 44장으로 구성된다. 44장을 모두 구분하기 위해서 각각의 패에 0~43 사이의 번호를 부여한다. 이때, 번호와 패의 관계는 두 방법으로 정의 될 수 있다.</p>
+<ol>
+<li>[세트] [종류] : 숫자가 1인 패 &#x3D; [0, 1, 2, 3]</li>
+<li>[종류] [세트] : 숫자가 1인 패 &#x3D; [0, 11, 22, 33]</li>
+</ol>
+<p>패를 정렬할 때, 종류 순으로 정렬해야 하는 것이 보기에 좋으므로, 첫번째 방법으로 정의한다.</p>
+<h2 id="상태-State"><a href="#상태-State" class="headerlink" title="상태 (State)"></a>상태 (State)</h2><p>패는 다음 중 한 곳에 있다.</p>
+<ul>
+<li>패산</li>
+<li>도라표시패</li>
+<li>각 플레이어의 손패</li>
+<li>각 플레이어의 버림패</li>
+</ul>
+<p>패를 고유한 번호로 인식할 때, 패는 두 곳에 동시에 존재할 수 없다. 그러므로 패산의 순서, 플레이어가 패를 버린 순서를 무시하면 현재 게임의 상태는 각 패의 위치를 저장하는 크기가 44인 Table로 표현할 수 있다.<br>(패를 버린 순서는 마작에 있어서 손패를 예측하는 데 꽤 중요하지만 그러면 모델의 크기가 커진다.)</p>
+<h3 id="쯔모한-패와-버림패"><a href="#쯔모한-패와-버림패" class="headerlink" title="쯔모한 패와 버림패"></a>쯔모한 패와 버림패</h3><p>쯔모한 패와 버림패는 특수한 패이다. (여기서 말하는 ‘버림패’는 갓 버린 패를 의미한다.) 이 패는 각 플레이어들이 화료 조건을 따지는 패이기 때문이다. 그러므로 이 패는 다른 손패, 버림패와 구분될 필요가 있다.</p>
+<h3 id="쯔모-턴과-론-턴"><a href="#쯔모-턴과-론-턴" class="headerlink" title="쯔모 턴과 론 턴"></a><strong>쯔모 턴</strong>과 <strong>론 턴</strong></h3><p>참새작의 행동과정은 다음과 같이 이루어진다.</p>
+<ul>
+<li>자신의 차례 : 패산에서 쯔모한다.<ul>
+<li>화료 조건을 만족하고, 지금 화료하는 것이 이득이다 : 화료한다.(쯔모)</li>
+<li>그렇지 않다 : 손패에서 패 한장 버린다.</li>
+</ul>
+</li>
+<li>상대방의 차례 : 상대방이 패를 버렸다.<ul>
+<li>화료 조건을 만족하고, 지금 화료하는 것이 이득이다 : 화료한다.(론)</li>
+<li>그렇지 않다 : 지나간다.</li>
+</ul>
+</li>
+</ul>
+<p>위에서 확인 가능한 것은, 참새작의 차례는 두 부분으로 나뉘어진다는 것이다. 하나는 자기 차례인 플레이어가 패를 뽑고 버리거나 쯔모하는 과정, 나머지 하나는 자기 차례인 플레이어가 패를 버리고 다른 플레이어가 론을 부르는 과정이다. 전자를 <strong>쯔모 턴</strong>, 후자를 <strong>론 턴</strong>이라고 하자.</p>
+<h2 id="행동-Action"><a href="#행동-Action" class="headerlink" title="행동 (Action)"></a>행동 (Action)</h2><p>한 차례가 두 부분으로 나뉜다는 것은 행동에도 두 가지 종류가 있다는 것을 의미한다. <strong>쯔모 턴</strong>에서 할 수 있는 행동(패를 버림, 쯔모)과 <strong>론 턴</strong>에서 할 수 있는 행동(패스, 론)은 서로 구분된다. 차례인 플레이어는 론을 할 수 없고, 차례가 아닌 플레이어는 패를 버릴 수 없다. 그러나 각 행동을 구분할 수 있다면 한 변수에 넣어도 된다. 각 행동에 대하여 서로 다른 번호를 부여하는 것이다. 패스와 론을 각각 0과 1로 부여하면 보기에는 좋으나 패를 버리는 행동과 햇갈릴 수 있으므로, 각각의 행동을 서로 구분되는 번호로 매기는 것이 더 안정적이다.</p>
+<p>또한 패를 버리는 행위에 번호를 매기는 방법도 두 종류가 있다.</p>
+<ol>
+<li>손패의 위치(0~5 사이)</li>
+<li>버리는 패의 번호(0~43 사이)</li>
+</ol>
+<p>첫번째 방법으로 하면 Action Space의 크기가 줄어드는 반면, 학습하기에는 힘들어진다. 예를 들어 내가 손패에서 다섯번째 패를 버렸다고 하자. 그 패가 <em>적5</em>인지 <em>발</em>인지 어떻게 확신할 것인가? 그래서 Action Space가 커지더라도 학습은 편한 두번째 방법을 이용한다. </p>
+<p>‘패산에서 쯔모’는 매 턴마다 그 어떤 행동보다 먼저, 그리고 반드시 발생하는 행동이다. 행동이지만 플레이어의 의지와는 관계없이 진행된다는 점에서 ‘환경’의 일부라고 볼 수 있다. 그러므로 이 행동은 번호를 매기지 않는다.</p>
+<h2 id="보상-Reward"><a href="#보상-Reward" class="headerlink" title="보상 (Reward)"></a>보상 (Reward)</h2><ul>
+<li>플레이어가 환경을 관측해서 행동을 하면, 환경은 현재 상태와 행동에 따른 보상를 플레이어에게 준다.</li>
+<li>플레이어는 보상을 최대로 하는 방향으로 학습한다.</li>
+</ul>
+<p>위의 사실로 인해 보상함수를 잘 설계하는 것 또한 중요하다. 참새작에서 사용할 수 있는 보상함수의 종류는 다음과 같다.</p>
+<ul>
+<li>최종적인 순위</li>
+<li>각 국에서의 점수의 증감</li>
+<li>도라, 적패, 확정된 점수</li>
+<li>완성된 몸통의 수 등</li>
+</ul>
+<p>아래로 내려갈수록 보상을 얻는 데 더 오래걸리지만 더 확실한 보상을 얻는다. 모든 정책의 목표는 게임에서 1등하는 것이고, 점수의 증감 역시 순위에 직접적인 영향을 미친다. 그러나 한 게임은 플레이어 수 만큼의 국으로 이루어져 있고, 국 또한 최소 18번의 차례가 지나간다. 즉, 보상을 얻는데 꽤 오래 걸린다. 그에 대한 보완책으로 아래 두 방법을 같이 사용할 수 있다.</p>
+<h2 id="결론"><a href="#결론" class="headerlink" title="결론"></a>결론</h2><ul>
+<li>환경은 플레이어(또는 에이전트)에게 상태를 제공하며, 플레이어는 환경에게 행동을 제공하여 보상을 얻는다.</li>
+<li>모든 패에 고유한 번호를 붙였을 때, 각 패는 정해진 위치에 단 하나만 존재할 수 있다. 그러므로 상태를 각 패의 위치를 저장하는 배열로 표현할 수 있다.</li>
+<li>참새작의 차례는 <strong>쯔모 턴</strong>과 <strong>론 턴</strong>으로 나뉜다. 그에 따라 행동도 두 종류로 구분이 된다. 그러나 각 행동에 고유한 번호를 붙이면, 한 변수로 표현이 가능하다.</li>
+<li>보상함수의 설계는 우리의 목표에 중요한 영향을 끼친다. 참새작에서 확실한 보상(최종적인 순위, 각 국에서의 점수의 증감)은 얻는 데 시간이 걸린다. 그러므로 이를 보완할 보상함수를 같이 쓰는 것이 좋을 것 같다.</li>
+</ul>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-03-19T05:13:09.000Z" title="2022. 3. 19. 오후 2:13:09">2022-03-19</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2022-03-22T01:12:15.469Z" title="2022. 3. 22. 오전 10:12:15">2022-03-22</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/AI/">AI</a><span> / </span><a class="link-muted" href="/categories/AI/Reinforcement-Learning/">Reinforcement Learning</a></span><span class="level-item">8분안에 읽기 (약 1143 단어)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/03/19/%EC%B0%B8%EC%83%88%EC%9E%91-AI-%EB%A7%8C%EB%93%A4%EA%B8%B0-0-%EC%B0%B8%EC%83%88%EC%9E%91%EC%9D%98-%EB%A3%B0/">참새작 AI 만들기 0 - 참새작의 룰</a></h1><div class="content"><h2 id="패"><a href="#패" class="headerlink" title="패"></a>패</h2><p>총 44개의 패(숫자패 1~9 4세트, 글자패 발, 중 4세트)로 진행한다.<br>패의 특징은 다음과 같다</p>
+<ul>
+<li>모든 패는 적색, 녹색, 나머지 패로 나뉜다.</li>
+<li>적색 패 : 숫자패 1세트(1~9), 글자패 중</li>
+<li>녹색 패 : 적색 패가 아닌 숫자패 중 2, 3, 4, 6, 8에 해당하는 패, 글자패 발</li>
+</ul>
+<h2 id="진행"><a href="#진행" class="headerlink" title="진행"></a>진행</h2><p>먼저 처음에 시작할 사람(<strong>친</strong>)을 정하고, 모든 사람은 40점을 받고 시작한다.<br>각 라운드(<strong>국</strong>)는 다음과 같이 진행한다.</p>
+<blockquote>
+<ol>
+<li>모든 패를 잘 섞고(<strong>패산</strong>) <strong>친</strong>부터 <strong>패산</strong>에서 패 5장(<strong>손패</strong>)을 가지고 간다.</li>
+<li>모든 사람이 5장을 가지고 갔으면, <strong>친</strong>은 패산에서 패 한 장(<strong>도라</strong>)를 공개한다.<br>이 패와 같은 패는 <strong>도라</strong>가 되며, 공개된 패는 <strong>현재 국에서 사용하지 않는다</strong></li>
+<li><strong>친</strong>부터 <strong>패산</strong>에서 패 한장을 <strong>손패</strong>에 더한 후(<strong>쯔모</strong>, <strong>쓰무</strong>), <strong>손패</strong>에서 패 한 장을 버린다.(<strong>버림패</strong>)</li>
+<li><strong>국</strong>는 다음의 경우 끝난다.  <ul>
+<li>누군가 <strong>화료</strong>를 했을 때</li>
+<li><strong>패산</strong>에 패가 없을 때(<strong>유국</strong>)</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+<p>해당 <strong>국</strong>이 끝나면 점수를 정산하고(누군가 <strong>화료</strong>를 했을 경우) <strong>친</strong>은 다음 사람에게 넘긴다.<br>모든 사람이 <strong>친</strong>을 한번씩 하면 게임이 종료되며, 점수가 가장 많은 사람이 이긴다.</p>
+<h2 id="화료"><a href="#화료" class="headerlink" title="화료"></a>화료</h2><p><strong>화료</strong>를 하는 방법은 두 가지가 있다.</p>
+<ul>
+<li>자신이 <strong>쯔모</strong>했을 때, <strong>화료</strong>조건을 만족한 경우(<strong>쯔모</strong>)</li>
+<li>상대방이 패를 버렸을 때, 그 패로 <strong>화료</strong>조건에 맞는 패를 만들 수 있을 경우(<strong>론</strong>)</li>
+</ul>
+<p><strong>화료</strong>를 했을 경우 그 즉시 해당 <strong>국</strong>이 끝나며, <strong>화료</strong>한 사람은 방법에 따라 점수를 얻는다.</p>
+<ul>
+<li><strong>쯔모</strong> : 나머지 사람으로부터 점수를 <strong>나누어</strong> 받는다.</li>
+<li><strong>론</strong> : 패를 버린 사람으로부터 <strong>모든</strong> 점수를 받는다.</li>
+</ul>
+<p><strong>화료</strong>조건은 다음과 같다.</p>
+<ul>
+<li><strong>손패</strong>의 형태가 <strong>화료</strong>를 할 수 있는 형태이다.</li>
+<li><strong>손패</strong>의 점수가 5점 이상이다.</li>
+</ul>
+<h3 id="화료-형태"><a href="#화료-형태" class="headerlink" title="화료 형태"></a>화료 형태</h3><p>손패를 3장씩 2묶음(<strong>몸통</strong>)으로 묶었을 때, 각 묶음이</p>
+<blockquote>
+<ul>
+<li>연속된 수패(<strong>슌쯔</strong>)</li>
+<li>같은 패(<strong>커쯔</strong>)</li>
+</ul>
+</blockquote>
+<p>이면, <strong>화료</strong>를 할 수 있는 형태가 되었다고 한다.</p>
+<h3 id="점수-역"><a href="#점수-역" class="headerlink" title="점수(역)"></a>점수(<strong>역</strong>)</h3><p><strong>역</strong>(또는 <strong>족보</strong>)는 점수를 얻을 수 있는 조건이다.<br><strong>역</strong>은 대부분 중첩이 되나, 일부 <strong>역</strong>은 중첩이 되지 않는다.<br><strong>역</strong>은 <strong>기본</strong>, <strong>역만</strong>, <strong>일반</strong> <strong>역</strong>으로 구성된다.</p>
+<ul>
+<li>기본 : 형태에 따른 역 (<strong>슌쯔</strong>, <strong>커쯔</strong>)<ul>
+<li><strong>슌쯔</strong> : 개당 1점</li>
+<li><strong>커쯔</strong> : 개당 2점</li>
+</ul>
+</li>
+<li>일반 : 조건에 따른 역<ul>
+<li><strong>도라</strong> : <strong>도라</strong>에 해당하는 패 1장당 1점</li>
+<li><strong>적색</strong> : 적색 패에 해당하는 패 1장당 1점</li>
+<li><strong>단요구</strong> : 2~9의 수패로 이루진 경우, 1점</li>
+<li><strong>혼전대요구</strong> : 모든 <strong>몸통</strong>에 1, 9, 발, 중 패가 포함될 경우, 2점</li>
+</ul>
+</li>
+<li>역만 : 조건에 따른 역, 일반 역보다 더 어렵다.<ul>
+<li><strong>녹일색</strong> : 모든 패가 녹색 패일 경우, 10점</li>
+<li><strong>혼노두</strong> : 모든 패가 1, 9, 발, 중 패로만 이루어져 있을 경우, 15점</li>
+<li><strong>적일색</strong> : 모든 패가 적색 패일 경우, 20점</li>
+</ul>
+</li>
+</ul>
+<p>일반 역과 역만 역은 서로 중첩이 되지 않으며, 역만 역을 우선적으로 적용한다.<br>기본 역은 다른 모든 역과 중첩이 된다.<br>예) [1, 1, 적1, 9, 9, 9], 도라 1 : 커쯔2(4), <del>적색(1)</del>, <del>도라(1)</del>, <del>혼전대요구(2)</del>, 혼노두(15) &#x3D;&gt; 19점</p>
+<h2 id="그-외"><a href="#그-외" class="headerlink" title="그 외"></a>그 외</h2><ul>
+<li>만약 자신이 가진 점수가 부족해 점수 지불하지 못할 경우, 남은 모든 점수를 지불하고 게임을 계속한다. 그 차이에 대한 점수는 지불하지 않아도 된다.</li>
+<li>여러 사람이 <strong>론</strong>을 할 수 있다.(<strong>더블 론</strong>, <strong>트리플 론</strong> 등) 이 경우, 차례가 빠른 사람부터 돌아가며 점수를 얻으며, 중간에 점수가 부족할 경우 위의 규칙을 따른다.</li>
+<li><strong>친</strong>이 화료할 경우 2점을 추가로 얻는다. <strong>화료</strong>조건의 최소 점수 요구조건에 이 점수는 포함되지 않는다.</li>
+<li>이미 버려진 패로 <strong>론</strong>을 할 수 없다. <strong>론</strong>을 할 수 있는 패는, 상대방이 바로 버려진 패 뿐이다.</li>
+<li>자신이 버린 패에 해당하는 숫자, 글자로는 <strong>론을 할 수 없다</strong>.<br>(<strong>쯔모</strong>는 가능하다.)<br>예) 녹색 4 버림 -&gt; 이후부터 녹색 4, 적색 4으로는 <strong>론을 할 수 없다</strong>. <strong>쯔모</strong>는 가능하다.</li>
+</ul>
+<h2 id="참고-자료"><a href="#참고-자료" class="headerlink" title="참고 자료"></a>참고 자료</h2><p>나무위키 : <a target="_blank" rel="noopener" href="https://namu.wiki/w/%EC%B0%B8%EC%83%88%EC%9E%91">참새작 항목</a><br>유튜브 : <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=OaSuOgxQZTw">보드라이프 리뷰</a></p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-03-19T03:47:37.000Z" title="2022. 3. 19. 오후 12:47:37">2022-03-19</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2022-03-21T04:36:05.452Z" title="2022. 3. 21. 오후 1:36:05">2022-03-21</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/AI/">AI</a><span> / </span><a class="link-muted" href="/categories/AI/Reinforcement-Learning/">Reinforcement Learning</a></span><span class="level-item">4분안에 읽기 (약 609 단어)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/03/19/%EC%B0%B8%EC%83%88%EC%9E%91-AI-%EB%A7%8C%EB%93%A4%EA%B8%B0-0-%EC%86%8C%EA%B0%9C/">참새작 AI 만들기 0 - 소개</a></h1><div class="content"><h2 id="참새작"><a href="#참새작" class="headerlink" title="참새작?"></a>참새작?</h2><p>원래는 마작 AI를 만들려고 했다. 그러나 마작은 룰이 너무 복잡하다.</p>
+<ol>
+<li><strong>역</strong>(<strong>족보</strong>라고도 한다.)의 종류 및 조건 : <strong>역</strong>은 중국 마작은 88개, 일본 마작은 43개로 다른 카드 게임의 역보다 많다. <strong>역</strong>마다 성립되는 조건도 다르며, 일부 <strong>역</strong>은 다른 역과 형태가 다르다. 게다가 몇몇 <strong>역</strong>은 다른 역과 중복이 되지 않는다.</li>
+<li><strong>울기</strong> : <strong>울기</strong>는 조건을 만족했을 때, 상대방이 버린 패를 가져오거나 <strong>론</strong>을 할 수 있는 룰이다. <strong>울기</strong>의 존재로 자신이 패를 버리고 난 뒤에도 상대방에게 <strong>울</strong>것인지 물어보아야 한다. 그래서 오프라인 마작에서는 다음 사람이 패를 가져가기 전에 다급하게 ‘잠깐’이라고 외치는 사람을 종종 볼 수 있다.</li>
+<li>(일본 마작 한정) <strong>후리텐</strong> : <strong>화료</strong>(<strong>나다</strong>로 표현하기도 한다.)할 수 있는 손패를 <strong>텐파이</strong>라고 한다. 이 때, 오를 수 있는 패를 이미 버렸다면, <strong>론</strong>을 할 수 없다. 이 조건으로 일본 마작에서는 유효한 전략이 생길 수 있다.(<strong>론</strong>을 피할 수 있다.) 그러나 매 차례마다 화료할 수 있는 패를 버렸는지 확인해야 하므로, 구현하기 까다로운 룰이라 할 수 있다.</li>
+</ol>
+<p>위를 바탕으로 새로운 마작의 조건을 보면</p>
+<ul>
+<li><strong>역</strong>의 개수가 적고 간단할수록 좋다.</li>
+<li><strong>울기</strong> 조건이 적을수록 좋다.</li>
+<li><strong>후리텐</strong>이 있으나 그 조건이 간단하면 좋다.</li>
+</ul>
+<p>참새작은 위의 조건을 모두 만족한다.</p>
+<ul>
+<li><strong>역</strong>은 총 7개</li>
+<li><strong>울기</strong>는 <strong>론</strong>밖에 없음</li>
+<li>버린패로만 <strong>론</strong>을 할 수 없음</li>
+</ul>
+<p>그러므로 참새작 AI를 만들기로 결정하였다.</p>
+<h2 id="목표"><a href="#목표" class="headerlink" title="목표"></a>목표</h2><p>안타깝게도 참새작은 많이 알려지지 않았다. 바둑 같은 경우에는 알려진 AI끼리 대전하거나, 바둑 게임 서버에 배포하여 그 결과를 쉽게 알 수 있다. 그러나 참새작은 알려진 AI도 없고 온라인 게임 서버또한 없다. 그래서 다음과 같은 목표를 세운다.</p>
+<ul>
+<li>Random Agent와의 대전에서 승률 70%이상</li>
+<li>(Closed Agent 한정) Open Agent와의 대전에서 승률 70% 이상</li>
+</ul>
+<h2 id="Repo"><a href="#Repo" class="headerlink" title="Repo"></a>Repo</h2><p><a target="_blank" rel="noopener" href="https://github.com/sonhs99/SuzumeAI">Github</a></p>
+</div></article></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/logo.png" alt="sonhs99"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">sonhs99</p><p class="is-size-6 is-block">ML, OS, Reverse Engineering</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>South Korea</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">포스트</p><a href="/archives"><p class="title">6</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">카테고리</p><a href="/categories"><p class="title">2</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">태그</p><a href="/tags"><p class="title">3</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/sonhs99" target="_blank" rel="noopener">팔로우</a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">카테고리</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/AI/"><span class="level-start"><span class="level-item">AI</span></span><span class="level-end"><span class="level-item tag">6</span></span></a><ul><li><a class="level is-mobile" href="/categories/AI/Reinforcement-Learning/"><span class="level-start"><span class="level-item">Reinforcement Learning</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">최근 글</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-03-22T02:18:11.000Z">2022-03-22</time></p><p class="title"><a href="/2022/03/22/%EC%B0%B8%EC%83%88%EC%9E%91-AI-%EB%A7%8C%EB%93%A4%EA%B8%B0-2-%EC%97%AD/">참새작 AI 만들기 2 - 역</a></p><p class="categories"><a href="/categories/AI/">AI</a> / <a href="/categories/AI/Reinforcement-Learning/">Reinforcement Learning</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-03-22T01:11:10.000Z">2022-03-22</time></p><p class="title"><a href="/2022/03/22/%EC%B0%B8%EC%83%88%EC%9E%91-AI-%EB%A7%8C%EB%93%A4%EA%B8%B0-2-%ED%8C%A8-%EC%86%90%ED%8C%A8-%EB%B2%84%EB%A6%BC%ED%8C%A8/">참새작 AI 만들기 2 - 패, 손패, 버림패</a></p><p class="categories"><a href="/categories/AI/">AI</a> / <a href="/categories/AI/Reinforcement-Learning/">Reinforcement Learning</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-03-20T01:32:53.000Z">2022-03-20</time></p><p class="title"><a href="/2022/03/20/%EC%B0%B8%EC%83%88%EC%9E%91-AI-%EB%A7%8C%EB%93%A4%EA%B8%B0-1-%EC%97%90%EC%9D%B4%EC%A0%84%ED%8A%B8/">참새작 AI 만들기 1 - 에이전트</a></p><p class="categories"><a href="/categories/AI/">AI</a> / <a href="/categories/AI/Reinforcement-Learning/">Reinforcement Learning</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-03-19T08:05:52.000Z">2022-03-19</time></p><p class="title"><a href="/2022/03/19/%EC%B0%B8%EC%83%88%EC%9E%91-AI-%EB%A7%8C%EB%93%A4%EA%B8%B0-1-%ED%99%98%EA%B2%BD/">참새작 AI 만들기 1 - 환경</a></p><p class="categories"><a href="/categories/AI/">AI</a> / <a href="/categories/AI/Reinforcement-Learning/">Reinforcement Learning</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-03-19T05:13:09.000Z">2022-03-19</time></p><p class="title"><a href="/2022/03/19/%EC%B0%B8%EC%83%88%EC%9E%91-AI-%EB%A7%8C%EB%93%A4%EA%B8%B0-0-%EC%B0%B8%EC%83%88%EC%9E%91%EC%9D%98-%EB%A3%B0/">참새작 AI 만들기 0 - 참새작의 룰</a></p><p class="categories"><a href="/categories/AI/">AI</a> / <a href="/categories/AI/Reinforcement-Learning/">Reinforcement Learning</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">아카이브</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2022/03/"><span class="level-start"><span class="level-item">3월 2022</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">태그</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/AI/"><span class="tag">AI</span><span class="tag">6</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Reinforcement-Learning/"><span class="tag">Reinforcement Learning</span><span class="tag">6</span></a></div><div class="control"><a class="tags has-addons" href="/tags/SuzumeAI/"><span class="tag">SuzumeAI</span><span class="tag">6</span></a></div></div></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="Jar.Empty()" height="28"></a><p class="is-size-7"><span>&copy; 2022 Jar.Empty()</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ko");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="맨 위로" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "이 웹 사이트는 귀하의 경험을 향상시키기 위해 Cookie를 사용합니다.",
+          dismiss: "무시",
+          allow: "허용",
+          deny: "거부",
+          link: "더 알아보기",
+          policy: "Cookie 정책",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="입력 하세요..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"입력 하세요...","untitled":"(제목 없음)","posts":"포스트","pages":"페이지","categories":"카테고리","tags":"태그"});
+        });</script></body></html>
